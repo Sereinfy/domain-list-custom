@@ -210,7 +210,6 @@ jobs:
           file: ./domains/*
           
       - name: Get dependencies and run
-        if: ${{ env.NeedToSync }}
         run: |
           go run ./ --datapath=./domains
           
