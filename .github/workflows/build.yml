@@ -208,7 +208,12 @@ jobs:
           body: "域名列表文件"
           file_glob: true
           file: ./domains/*
-
+          
+      - name: Get dependencies and run
+        if: ${{ env.NeedToSync }}
+        run: |
+          go run ./ --datapath=./domains
+          
       - name: Git push assets to `domains` branch
         run: |
           cd ./domains/ || exit 1
