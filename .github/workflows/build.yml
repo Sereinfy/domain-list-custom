@@ -208,11 +208,7 @@ jobs:
           body: "域名列表文件"
           file_glob: true
           file: ./domains/*
-          
-      - name: Get dependencies and run
-        run: |
-          go run ./ --datapath=./domains
-          
+        
       - name: Git push assets to `domains` branch
         run: |
           cd ./domains/ || exit 1
@@ -233,8 +229,8 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            ./domains/geosite.dat
-            ./domains/geosite.dat.sha256sum
+            ./publish/geosite.dat
+            ./publish/geosite.dat.sha256sum
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Purge jsDelivr CDN
