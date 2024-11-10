@@ -177,7 +177,10 @@ jobs:
           curl -sSL ${cn} | grep -Ev '#|IP-' >> ./tmp/temp-cn.txt
           sort --ignore-case -u ./tmp/temp-cn.txt > ./domains/cn.list
           rm -rf ./tmp* ./publish*
-
+      - name: Generate `clash` geosite.dat and domains(.txt files)
+        run: |
+          go run ./ --datapath=./domains/ --outputname geosite.dat
+          
       - name: Release and upload `clash` assets
         uses: svenstaro/upload-release-action@v2
         with:
