@@ -64,7 +64,9 @@ jobs:
           echo "include:geolocation-!cn @cn" >> ./community/data/cn
           echo "include:geolocation-cn @!cn" >> ./community/data/geolocation-\!cn
 
-
+      - name: Generate `clash` geosite.dat and domains(.txt files)
+        run: |
+          go run ./ --datapath=./community/data/
           
       - name: Generate fakeip-filter
         run: |
