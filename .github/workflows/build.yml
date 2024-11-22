@@ -53,16 +53,12 @@ jobs:
         with:
           go-version-file: ./go.mod
           
-      - name: Checkout v2fly/domain-list-community
+      - name: Checkout Loyalsoldier/domain-list-custom
         uses: actions/checkout@v4
         with:
-          repository: v2fly/domain-list-community
+          repository: Loyalsoldier/domain-list-custom
           path: community
 
-      - name: Append attribute domains
-        run: |
-          echo "include:geolocation-!cn @cn" >> ./community/data/cn
-          echo "include:geolocation-cn @!cn" >> ./community/data/geolocation-\!cn
           
       - name: Generate `clash` geosite.dat and domains(.txt files)
         run: |
