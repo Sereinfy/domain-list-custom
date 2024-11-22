@@ -58,11 +58,6 @@ jobs:
         with:
           repository: Loyalsoldier/domain-list-custom
           path: community
-
-          
-      - name: Generate `clash` geosite.dat and domains(.txt files)
-        run: |
-          go run ./ --datapath=./community/data/
           
       - name: Generate fakeip-filter
         run: |
