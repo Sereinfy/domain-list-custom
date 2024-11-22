@@ -53,11 +53,18 @@ jobs:
         with:
           go-version-file: ./go.mod
           
-      - name: Checkout Loyalsoldier/domain-list-custom
+      - name: Checkout v2fly/domain-list-community
         uses: actions/checkout@v4
         with:
-          repository: Loyalsoldier/domain-list-custom
+          repository: v2fly/domain-list-community
           path: community
+
+      - name: Append attribute domains
+        run: |
+          echo "include:geolocation-!cn @cn" >> ./community/data/cn
+          echo "include:geolocation-cn @!cn" >> ./community/data/geolocation-\!cn
+
+
           
       - name: Generate fakeip-filter
         run: |
