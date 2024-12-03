@@ -71,6 +71,21 @@ jobs:
           curl -sSL ${fakeip_filter} | grep  '.\*' | grep -E '\*|\+' | sed -e 's/^*/.\*/' -e 's/^+/.\+/' -e 's/^/DOMAIN-REGEX,/' >> ./tmp/temp-fakeip-filter.txt
           sort --ignore-case ./tmp/temp-fakeip-filter.txt > ./domains/fakeip-filter.list
 
+      - name: Generate fakeip-filter-lite
+        run: |
+          cat <<EOF > ./domains/fakeip-filter-lite.list
+          DOMAIN,adguardteam.github.io
+          DOMAIN,adrules.top
+          DOMAIN,anti-ad.net
+          DOMAIN,local.adguard.org
+          DOMAIN,static.adtidy.org
+          DOMAIN-SUFFIX,market.xiaomi.com
+          DOMAIN-SUFFIX,steamcontent.com
+          DOMAIN-KEYWORD,ntp
+          DOMAIN-KEYWORD,time
+          DOMAIN-KEYWORD,stun
+          EOF
+
       - name: Generate applications
         run: |
           curl -sSL ${applications1} | grep -Ev '#|IP-' > ./tmp/temp-applications.txt
