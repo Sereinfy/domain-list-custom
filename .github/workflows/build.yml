@@ -68,12 +68,12 @@ jobs:
           mkdir -p ./tmp/ ./domains/
           curl -sSL ${fakeip_filter} | grep -Ev '#|\+|\*|Mijia' | sed 's/^/DOMAIN,/' > ./tmp/temp-fakeip-filter.txt
           curl -sSL ${fakeip_filter} | grep -v '.\*' | grep -E '\*|\+' | sed 's/^[*+]\./DOMAIN-SUFFIX,/' >> ./tmp/temp-fakeip-filter.txt
-          curl -sSL ${fakeip_filter} | grep  '.\*' | grep -E '\*|\+' | sed -e 's/^*/.\*/' -e 's/^+/.\+/' -e 's/^/DOMAIN-REGEX,/' >> ./tmp/temp-fakeip-filter.txt
+          curl -sSL ${fakeip_filter} | grep '.\*' | grep -E '\*|\+' | sed -e 's/^*/.\*/' -e 's/^+/.\+/' -e 's/^/DOMAIN-REGEX,/' >> ./tmp/temp-fakeip-filter.txt
           sort --ignore-case ./tmp/temp-fakeip-filter.txt > ./domains/fakeip-filter.list
 
       - name: Generate fakeip-filter-lite
         run: |
-          cat <<EOF > ./domains/fakeip-filter-lite.list
+          cat <<EOF > ./tmp/temp-fakeip-filter-lite.txt
           DOMAIN,adguardteam.github.io
           DOMAIN,adrules.top
           DOMAIN,anti-ad.net
@@ -81,10 +81,10 @@ jobs:
           DOMAIN,static.adtidy.org
           DOMAIN-SUFFIX,market.xiaomi.com
           DOMAIN-SUFFIX,steamcontent.com
-          DOMAIN-KEYWORD,ntp
-          DOMAIN-KEYWORD,time
-          DOMAIN-KEYWORD,stun
           EOF
+          curl -sSL ${fakeip_filter} | grep -E 'ntp|time|stun' | grep -v '.\*' | grep -E '\*|\+' | sed 's/^[*+]\./DOMAIN-SUFFIX,/' >> ./tmp/temp-fakeip-filter-lite.txt
+          curl -sSL ${fakeip_filter} | grep -E 'ntp|time|stun' | grep '.\*' | grep -E '\*|\+' | sed -e 's/^*/.\*/' -e 's/^+/.\+/' -e 's/^/DOMAIN-REGEX,/' >> ./tmp/temp-fakeip-filter-lite.txt
+          sort --ignore-case ./tmp/temp-fakeip-filter-lite.txt > ./domains/fakeip-filter-lite.list
 
       - name: Generate applications
         run: |
